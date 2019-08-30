@@ -24,6 +24,7 @@ import AdminDashboard from "./components/dashboard/AdminDashboard.js";
 import AwaitingApproval from "./components/views/AwaitingApproval.js";
 import MentorProfile from "./components/views/MentorProfile.js"
 import ProfileView from "./components/views/ProfileView.js"
+import ProfileUpdate from "./components/views/ProfileUpdate.js"
 
 
 import "./App.css";
@@ -142,6 +143,7 @@ class App extends React.Component {
                 />
               )}
             />
+            <Route path="/profile/update" component={ProfileUpdate} />
             <Route path="/profile/:uid" component={ProfileView} />
             <Route path="/applicationstatus" component={AwaitingApproval} />
           </Switch>

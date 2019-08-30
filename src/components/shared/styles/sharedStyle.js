@@ -1,3 +1,19 @@
+// Convert from hex color to rgb color
+// Good when you want to set a colors opacity.
+const hexToRgb = hex => {
+  var c;
+  if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){
+      c= hex.substring(1).split('');
+      if(c.length== 3){
+          c= [c[0], c[0], c[1], c[1], c[2], c[2]];
+      }
+      c= '0x'+c.join('');
+console.log(c)
+      return [parseInt((c>>16)&255), parseInt((c>>8)&255), parseInt(c&255)].join(',');
+  }
+  throw new Error('Bad Hex');
+}
+
 const drawerWidth = 260;
 
 const transition = {
@@ -75,6 +91,7 @@ const successColor = "#4caf50";
 const infoColor = "#00acc1";
 const roseColor = "#e91e63";
 const grayColor = "#999999";
+const blackColor = "#000";
 
 const primaryBoxShadow = {
   boxShadow:
@@ -179,6 +196,7 @@ const cardSubtitle = {
 };
 
 export {
+  hexToRgb,
   //variables
   drawerWidth,
   transition,
@@ -195,6 +213,7 @@ export {
   infoColor,
   roseColor,
   grayColor,
+  blackColor,
   primaryBoxShadow,
   infoBoxShadow,
   successBoxShadow,

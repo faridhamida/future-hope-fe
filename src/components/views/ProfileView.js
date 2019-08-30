@@ -10,7 +10,7 @@ import {
   } from "mdbreact";
 
 
-const ProfileView=props => {
+const ProfileView = props => {
   return (
     <MDBContainer className="profile-container d-flex" fluid>
       <div className="w-25 pr-3">
