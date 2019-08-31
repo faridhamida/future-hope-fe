@@ -1,1 +1,13 @@
 // Your custom styles
+.card-header{
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  border-bottom: none;
+  background: transparent;
+  width: 51vw;
+  margin: auto;
+  padding: 15px;
+  margin-top: -20px;
+  border-radius: 3px !important;
+  box-shadow: 0 4px 20px 0 rgba(0, 0, 0,.14), 0 7px 10px -5px rgba(156, 39, 176,.4);
+}

@@ -91,7 +91,8 @@ body {
 }
 
 .app-container > div:first-child:not(.landing-container){
-  padding-top: 80px;
+  /* padding-top: 80px; */
+  padding-top: 13vh;
 }
 
 .app-container {

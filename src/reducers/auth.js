@@ -6,7 +6,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   GET_USER_INFO_SUCCESS,
-  GET_UESR_INFO_FAIL
+  GET_UESR_INFO_FAIL, 
+  TOGGLE_EDIT_PROFILE, 
+  CLOSE_EDIT_PROFILE
 } from "../actions/auth";
 
 const initialState = {
@@ -24,7 +26,8 @@ const initialState = {
     userType: '',
     usersAwaitingApproval: null
   },
-  getUserInfoError: null
+  getUserInfoError: null,
+  openEditProfile: Boolean(false)
 };
 
 //! Just basic scaffolding, what to do with the payload?
@@ -88,7 +91,17 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         getUserInfoError: action.message
-      }
+      };
+      case TOGGLE_EDIT_PROFILE:
+        console.log(state.openEditProfile)
+        return {
+          ...state,
+          openEditProfile: !state.openEditProfile
+        }
+      case CLOSE_EDIT_PROFILE:
+        console.log(false)
+        return state
+          .set('openEditProfile', false)
     default:
       return {
         ...state

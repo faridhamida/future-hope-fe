@@ -1,24 +1,26 @@
-import React from 'react'
+import React, { useState, useEffect }  from 'react'
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types'
-import { createFirebaseConnect, isLoaded } from 'react-redux-firebase'
 import { auth, firestore, database } from "../../config/fbConfig.js";
 import { compose } from 'redux'
 import { connect } from 'react-redux'
 import { makeStyles } from "@material-ui/core/styles";
 
+import { 
+          MDBBtn,
+          MDBCard,
+          MDBContainer,
+          MDBCardHeader,
+          MDBInput,
+          MDBCardBody
+        } from "mdbreact";
+
+import { toggleEditProfile } from "../../actions/auth.js";
 
 // @material-ui/core components
-import GridContainer from "../shared/components/GridContainer";
-import GridItem from "../shared/components/GridItem";
-import Button from "../shared/components/Button";
-import CustomInput from "../shared/components/CustomInput";
-import Card from "../shared/components/card/Card";
-import CardBody from "../shared/components/card/CardBody";
-import CardAvatar from "../shared/components/card/CardAvatar";
-import CardHeader from "../shared/components/card/CardHeader";
-import CardFooter from "../shared/components/card/CardFooter";
 
-// withFirebase
+import CardAvatar from "../shared/components/card/CardAvatar";
+
 const styles = {
   cardCategoryWhite: {
     color: "rgba(255,255,255,.62)",
@@ -39,72 +41,68 @@ const styles = {
 };
 const useStyles = makeStyles(styles);
 
+const ProfileUpdate = props => {
 
-const ProfileUpdate = ( props, firebase ) => {
-  const classes = useStyles();
-  const user = props.userInfo;
+  const [user, setUser] = useState({});
+  useEffect(() => {
+        const userData =  props.userInfo;
+        setUser(userData);
+        console.log(userData)
+  }, [props.userInfo.isLoaded]);
 
-  // const userRef = firestore.collection("users").doc(props.userInfo.uid);
-  // const userRef = firestore.collection("users").doc(user);
+  const handleInputChange = event => {
+    const updatedUser = { ...user, [event.target.name]: event.target.value };
+    console.log(user);
+    setUser(updatedUser);
+  };
 
+  const [elem, setElem] = useState(false);
+  const dispatch = useDispatch();
 
-
-  async function writeUserData(){
-    try {
-    const userRef = firestore.collection("users").doc(props.userInfo.uid);
-    const userInfo = await userRef.get();
-    console.log(userInfo.data())
-    } catch (err) {
-    // handle error
-    }
+  const handleClick = () => {
+    setElem(!elem)
+    dispatch(toggleEditProfile());
   }
+
+  // async function writeUserData(){
+  //   try {
+  //   const userRef = firestore.collection("users").doc(props.userInfo.uid);
+  //   const userInfo = await userRef.get();
+  //   console.log(userInfo.data())
+  //   } catch (err) {
+  //   // handle error
+  //   }
+  // }
   return (
     
+      <MDBContainer>
+        {!props.userInfo.isLoaded ? <div> Please Wait </div> : ( 
+      <MDBCard>
+        <MDBCardHeader className="font-weight-bold" color="purple darken-1"  tag="h3">
+          Update Your Profile
+        </MDBCardHeader>
+        <CardAvatar profile>
+          <a href="#" onClick={e => e.preventDefault()}>
+            <img src={props.userInfo.photoUrl} alt="..." />
+          </a>
+        </CardAvatar>
+        <MDBCardBody>
+        <input value={user.fullName} type="text" disabled={elem} className="form-control" label="Name" onChange={handleInputChange} name="fullName" />
+        {/* <input type="text" disabled={elem} readOnly={elem} className="form-control-plaintext" label="Name" value={user.fullName} /> */}
+          <MDBInput value={user.city} label="City" onChange={handleInputChange} name="city" />
+          {/* <MDBInput label="Country" value={user.country} name="country" onChange={handleInputChange} /> */}
+          {/* <MDBInput label="About Me" value={user.about} name="about" onChange={handleInputChange} /> */}
+          {/* <h6 className={classes.cardCategory}>Role: {user.role}</h6> */}
+          {/* <MDBBtn outline color="purple darken-1" onClick={() => writeUserData()} round> */}
+          <MDBBtn outline color="purple darken-1" onClick={() => handleClick()} round>
+            Update
+          </MDBBtn>
+        </MDBCardBody>
+      </MDBCard>
+      )}
+    </MDBContainer>
+    
 
-    <div>
-      <h2>Update User Profile</h2>
-        <GridItem xs={12} sm={12} md={4}>
-          <Card profile>
-            <CardAvatar profile>
-              <a href="#pablo" onClick={e => e.preventDefault()}>
-                <img src={user.photoUrl} alt="..." />
-              </a>
-            </CardAvatar>
-            <CardBody profile>
-              <h6 className={classes.cardCategory}>{user.userType}</h6>
-              <h4 className={classes.cardTitle}>{user.fullName}</h4>
-              <p className={classes.description}>
-                {user.aboutMe}
-              </p>
-              <Button color="primary" onClick={() => writeUserData()} round>
-                Update
-              </Button>
-            </CardBody>
-          </Card>
-        </GridItem>
-      {/* <GridContainer>
-        <GridItem xs={12} sm={12} md={8}>
-          <Card>
-            <CardHeader color="primary">
-              <h4 className={classes.cardTitleWhite}>Edit Profile</h4>
-              <p className={classes.cardCategoryWhite}>Complete your profile</p>
-            </CardHeader>
-            </Card>
-        </GridItem>
-      </GridContainer> */}
-
-      {/* <button onClick={() => firebase.updateProfile({ aboutMe: 'admin' })}> */}
-
-
-      {/* <div>
-        {
-          isLoaded(profile)
-            ? JSON.stringify(profile, null, 2)
-            : 'Loading...'
-        }
-      </div> */}
-
-    </div>
   )
 }
 
@@ -114,20 +112,9 @@ ProfileUpdate.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    auth: state.firebase.auth,
-    authError: state.auth.authError,
-    userInfo: state.firebase.profile
+    userInfo: state.firebase.profile,
+    auth: state.firebase.auth
   };
 };
 
 export default connect(mapStateToProps)(ProfileUpdate);
-
-
-// export default compose(
-//   createFirebaseConnect, // add props.firebase (firebaseConnect() can also be used)
-//   connect(
-//     ({ firebase: { profile } }) => ({
-//       profile
-//     })
-//   )
-// )(ProfileUpdate)

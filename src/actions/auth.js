@@ -9,6 +9,9 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const GET_USER_INFO_SUCCESS = "GET_USER_INFO_SUCCESS";
 export const GET_UESR_INFO_FAIL = "GET_UESR_INFO_FAIL";
 
+export const TOGGLE_EDIT_PROFILE = "OPEN_EDIT_PROFILE";
+export const CLOSE_EDIT_PROFILE = "CLOSE_EDIT_PROFILE";
+
 // Sign up
 //! This is no longer being used. We set the info inside of signup.js, and store it using the aciton userStore below.
 // export const signUp = user => {
@@ -103,3 +106,23 @@ export const userStore = user => {
     };
   }
 };
+
+/**
+ * Open edit profile
+ */
+export const toggleEditProfile = () => {
+  return {
+    type: TOGGLE_EDIT_PROFILE
+  }
+
+}
+
+/**
+ * Close edit profile
+ */
+export const closeEditProfile = () => {
+  return {
+    type: CLOSE_EDIT_PROFILE
+  }
+
+}
