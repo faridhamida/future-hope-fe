@@ -8,7 +8,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers/rootReducer";
 import { reduxFirestore, getFirestore, createFirestoreInstance } from "redux-firestore";
 import { reactReduxFirebase, getFirebase, ReactReduxFirebaseProvider } from "react-redux-firebase";
-import firebase  from "firebase/app";
+import firebase from "firebase/app";
 
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "bootstrap-css-only/css/bootstrap.min.css";
