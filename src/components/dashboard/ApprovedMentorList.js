@@ -123,7 +123,7 @@ const ApprovedMentorList = (props) => {
                     {tablet ? "" : <TableCell className={classes.city}>{user.city}</TableCell>}
                     {mobile ? "" : <TableCell>{user.stateProvince}</TableCell>}
                     <TableCell>
-                      <ArrowForwardIcon onClick={() => pushToProfilePage(user.uid)} style={{ color: "#ff9800" }} />
+                      <ArrowForwardIcon onClick={() => pushToProfilePage(user.uid)} style={{ color: "#ff9800", cursor: "pointer" }} />
                     </TableCell>
                   </TableRow>
                 </TableBody>

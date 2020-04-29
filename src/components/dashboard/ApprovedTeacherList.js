@@ -119,7 +119,7 @@ const ApprovedTeacherList = (props) => {
                     {tablet ? "" : <TableCell className={classes.city}>{user.city}</TableCell>}
                     {mobile ? "" : <TableCell>{user.stateProvince}</TableCell>}
                     <TableCell>
-                      <ArrowForwardIcon onClick={() => pushToProfilePage(user.uid)} style={{ color: "#ff9800" }} />
+                      <ArrowForwardIcon onClick={() => pushToProfilePage(user.uid)} hoveredStyles={{ cursor: "pointer" }} style={{ color: "#ff9800" }} />
                     </TableCell>
                   </TableRow>
                 </TableBody>
